@@ -1,0 +1,129 @@
+<app-navbar></app-navbar>
+<app-sidebar></app-sidebar>
+<div class=" mini-sidebar">
+    <p><i class="fa-solid fa-circle-info mx-3" style="color: #1c1e21;"></i>IPO Information</p>
+    <p><i class="fa-solid fa-clipboard-list mx-3" style="color: #1c1e21;"></i>IPO Info</p>
+</div>
+<div class="d-flex justify-content-between align-items-center px-3"
+    style="position: fixed;top:67px;left: 20%;width: 80%; ">
+    <h5>Upcoming IPO Information</h5>
+    <div class="d-flex gap-3">
+        <button class="blue-white-btn rounded-3" (click)="submitIPO()" [disabled]="isLoading">
+            {{ editingId ? 'Update' : 'Register' }}
+        </button>
+        <button class="btn-blue-white text-blue" [disabled]="isLoading">Cancel</button>
+    </div>
+</div>
+<p>Manage your IPO details</p>
+<div class="body" style="position: absolute;top: 120px;left: 25%;width: 75%;">
+
+    <div class="d-flex">
+
+        <div class="details w-75">
+            <h5>IPO Information</h5>
+            <p>Enter IPO details</p>
+            <hr>
+            <div>
+                <h6>Company Logo</h6>
+                <div class="d-flex gap-2">
+                    <img src="../../../assets/nse-india-logo.png" height="70px" width="70px">
+                    <div>
+                        <h5 class="p-0 my-1">NSE India</h5>
+                        <p class=" p-0 mb-0">Tech Lead</p>
+                        <p class=" p-0 ">Pune</p>
+                    </div>
+                    <label class="blue-white-btn custom-file-upload">
+                        Upload Logo
+                        <input type="file">
+                    </label>
+                    <button class="btn-blue-white p-1 delete-btn px-3 text-blue">Delete</button>
+                </div>
+                <div class="w-100">
+                    <form class="inputs w-100" [formGroup]="companyDetails">
+                        <div class="input my-1">
+                            <p class="my-1"><label for="companyName">Company Name</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="Vodafone Idea"
+                                formControlName="companyName">
+                        </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="priceBand">Price Band</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="Not Issued" formControlName="priceBand">
+                        </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="open">Open</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="Not Issued" formControlName="open">
+                        </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="close">Close</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="Not Issued" formControlName="close">
+                        </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="issueSize">Issue Size</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="2300 Cr." formControlName="issueSize">
+                        </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="issueType">Issue Type</label></p>
+                            <select class="p-1 w-75" name="category" formControlName="issueType">
+                                <option value="ongoing">ongoing</option>
+                                <option value="New Listed">New Listed</option>
+                                <option value="coming">coming</option>
+                            </select>
+                        </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="listingDate">Listing Date</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="Not Issued" formControlName="listingDate">
+                        </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="status">Status</label></p>
+                            <select class="p-1 w-75" name="category" formControlName="status">
+                                <option value="ongoing">ongoing</option>
+                                <option value="New Listed">New Listed</option>
+                                <option value="coming">coming</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <h6 class="my-3">NEW LISTED IPO DETAILS (WHEN IPO GET LISTED)</h6>
+                <div class="w-100">
+                    <form class="inputs w-100" [formGroup]="newListedDetails">
+                        <div class="input my-1">
+                            <p class="my-1"><label for="ipoPrice">IPO Price</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="₹ 383" formControlName="ipoPrice">
+                        </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="listingPrice">Listing Price</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="₹ 435" formControlName="listingPrice">
+                        </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="listingGain">Listing Gain</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="13.58 %" formControlName="listingGain">
+                        </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="listingDate">Listing Date</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="2024-05-30">
+                            </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="cmp">CMP</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="₹410" formControlName="cmp">
+                        </div>
+                        <div class="input my-1">
+                            <p class="my-1"><label for="currentReturn">Current Return</label></p>
+                            <input class="p-1 w-75" type="text" placeholder="7.05 %" formControlName="currentReturn">
+                        </div>
+                        <div class="input my-1">
+                            <input type="file" (change)="onFileChange($event, 'rhp')" formControlName="rhp" />
+                        </div>
+                        <div class="input my-1">
+                            <input type="file" (change)="onFileChange($event, 'drhp')" formControlName="drhp" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isLoading" class="loader-overlay">
+    <div class="spinner"></div>
+    <p>Processing IPO details...</p>
+</div>

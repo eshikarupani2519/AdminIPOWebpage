@@ -1,0 +1,20 @@
+<div class="body font-poppins" >
+    <p class="my-3">
+        <a href="" class="text-blue">Bluestock</a> ><a href="" class="text-blue">IPO</a> ><span >UPCOMING IPO</span>
+    </p>
+    <h4 class="my-2 text-dark">Upcoming IPO</h4>
+    <p>Companies that have filled for an IPO with SEBI. Few details might be disclosed by the companies later.</p>
+    <div class="IPO-cards row">
+        <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center w-100 py-5">
+            <div class="spinner"></div>
+            <p class="ml-3 text-muted">Loading New Listed IPOs...</p>
+        </div>
+        <ng-container *ngIf="!isLoading && IPOs.length > 0">
+            <app-ipocard [ipo]="ipo" *ngFor="let ipo of IPOs" class="font-poppins single-card col-lg-3 col-md-5 col-10"></app-ipocard>
+        </ng-container>
+        <div *ngIf="!isLoading && IPOs.length === 0" class="col-12 text-center py-5">
+            <p class="text-muted">No New Listed IPOs available at the moment.</p>
+        </div>
+    </div>
+    <app-faqs class="font-poppins"></app-faqs>
+</div>

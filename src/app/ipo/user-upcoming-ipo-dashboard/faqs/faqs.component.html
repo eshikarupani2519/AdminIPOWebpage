@@ -1,0 +1,34 @@
+
+<div class="container my-5">
+  <h4>Frequently Asked Questions?</h4>
+  <p>Find answers to common questions that come in your mind related to IPO.</p>
+
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item my-3" *ngFor="let faq of faqs; let i = index">
+      <h2 class="accordion-header" [id]="'heading' + i">
+        <button
+          class="accordion-button"
+          [ngClass]="{'collapsed': i !== 0}"
+          type="button"
+          data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#collapse' + i"
+          [attr.aria-expanded]="i === 0"
+          [attr.aria-controls]="'collapse' + i"
+        >
+          {{ faq.question }}
+        </button>
+      </h2>
+      <div
+        [id]="'collapse' + i"
+        class="accordion-collapse collapse"
+        [ngClass]="{'show': i === 0}"
+        [attr.aria-labelledby]="'heading' + i"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          {{ faq.answer }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

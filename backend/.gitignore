@@ -1,0 +1,158 @@
+# ---------------------------------------------------------------
+# GENERAL / OPERATING SYSTEM / IDE
+# ---------------------------------------------------------------
+
+# Operating System Files
+.DS_Store           # macOS directory service file
+Thumbs.db           # Windows thumbnail cache
+desktop.ini         # Windows folder customization
+*.swp               # Vim swap files
+*~                  # Emacs backup files
+.#* # Emacs lock files
+.directory          # Dolphin (KDE) directory settings
+
+# IDE Specific Files (add/remove as needed for your IDE)
+.idea/              # IntelliJ IDEA
+.vscode/            # VS Code
+*.iml               # IntelliJ IDEA modules
+*.iws               # IntelliJ IDEA workspaces
+*.ipr               # IntelliJ IDEA projects
+*.sublime-project   # Sublime Text project files
+*.sublime-workspace # Sublime Text workspace files
+.project            # Eclipse project files
+.classpath          # Eclipse classpath files
+.settings/          # Eclipse settings directory
+*.komodoproject     # Komodo IDE
+*.kpf               # Komodo IDE
+nbproject/          # NetBeans project files
+
+# Build artifacts, temporary files, etc.
+bin/                # Compiled binaries
+build/              # General build output directory
+dist/               # General distribution directory
+tmp/                # Temporary files
+temp/               # Temporary files
+*.log               # Log files
+*.bak               # Backup files
+*.orig              # Merge original files
+*.rej               # Merge reject files
+.cache/             # Cache directories (e.g., from linters, build tools)
+
+# Environment variables
+.env                # Common for local environment variables
+.env.* # Any file starting with .env. (e.g., .env.local, .env.development)
+
+# ---------------------------------------------------------------
+# LANGUAGE / FRAMEWORK SPECIFIC IGNORES
+# ---------------------------------------------------------------
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log3
+# === Node.js / JavaScript / TypeScript ===
+node_modules/       # Node.js dependencies
+npm-debug.log* # npm debug logs
+yarn-debug.log* # Yarn debug logs
+yarn-error.log* # Yarn error logs
+lerna-debug.log* # Lerna debug logs
+coverage/           # Jest/Istanbul test coverage reports
+*.tsbuildinfo       # TypeScript build info file
+.pnp/               # Yarn Plug'n'Play
+.pnp.js
+.eslintcache        # ESLint cache
+.prettierignore     # Prettier ignore (if it's not meant to be shared)
+*.js.map            # Source maps (if you don't commit them)
+*.d.ts              # TypeScript declaration files (if generated and not source)
+
+# === Python ===
+__pycache__/        # Python compiled bytecode cache
+*.pyc               # Python compiled bytecode
+*.pyd               # Python dynamic library
+*.egg               # Python eggs
+*.egg-info/         # Python egg info
+.Python             # Python virtualenv directory (Windows)
+venv/               # Virtual environment directory (common)
+env/                # Another common virtual environment directory
+.venv/              # A newer common virtual environment directory
+pip-log.txt         # Pip log
+.tox/               # Tox testing framework
+.pytest_cache/      # Pytest cache
+.mypy_cache/        # Mypy type checker cache
+.ruff_cache/        # Ruff linter cache
+*.so                # Compiled shared libraries
+instance/           # Flask instance folder (for sqlite, config, etc.)
+.ipynb_checkpoints/ # Jupyter notebooks checkpoints
+.pytest_cache/      # pytest cache directory
+dist/               # Python build distributions
+build/              # Python build artifacts
+*.whl               # Wheel distributions
+
+# === Java / JVM (Maven/Gradle) ===
+target/             # Maven build directory
+build/              # Gradle build directory
+.gradle/            # Gradle wrapper files
+*.jar               # Java archive files
+*.war               # Web application archive files
+*.ear               # Enterprise application archive files
+*.class             # Compiled Java class files
+hs_err_pid*.log     # JVM crash logs
+.project            # Eclipse project files
+.classpath          # Eclipse classpath files
+.settings/          # Eclipse settings directory
+bin/                # Eclipse output directory
+.idea/              # IntelliJ IDEA
+*.iml               # IntelliJ IDEA module files
+out/                # IntelliJ IDEA output directory
+logs/               # Application specific logs
+
+# === PHP / Composer ===
+vendor/             # Composer dependencies
+composer.lock       # Composer lock file (if you want to regenerate on deploy, but often committed)
+                        # Recommendation: Often COMMIT composer.lock to ensure consistent builds.
+                        # Uncomment if you specifically do NOT want to commit it:
+                        # composer.lock
+
+storage/*.log       # Laravel log files
+bootstrap/cache/*.php # Laravel compiled services/packages
+public/hot          # Laravel Vite/Mix hot reload file
+public/storage      # Laravel symbolic link target (if created via 'php artisan storage:link')
+.phpunit.result.cache # PHPUnit test results cache
+phpunit.xml         # PHPUnit configuration (if local and not shared)
+.user.ini           # User INI configuration
+
+# === Ruby / Rails ===
+.bundle/            # Bundler cache
+vendor/bundle/      # Bundler dependencies
+log/*.log           # Rails log files
+tmp/                # Rails temporary files
+public/assets       # Compiled assets (if not precompiled on deploy)
+db/*.sqlite3        # SQLite databases (if used as development database)
+db/*.sqlite3-journal
+.byebug_history     # Byebug history
+.rspec              # RSpec configuration (if local)
+coverage/           # SimpleCov coverage reports
+
+# === Go ===
+bin/                # Compiled binaries
+pkg/                # Package cache
+*.exe               # Windows executables
+*.dll               # Windows dynamic link libraries
+*.so                # Linux shared objects
+*.dylib             # macOS dynamic libraries
+.tools/             # Tools downloaded by Go modules (e.g. protoc-gen-go)
+
+# === Docker ===
+.dockerignore       # Docker ignore file (often committed, but ignore if you don't want it)
+.docker             # Docker context files
+*.DS_Store
+*.env
+Dockerfile.prod
+Dockerfile.dev
+docker-compose.yml # Only if you have very specific local-only compose files
+docker-compose.*.yml # Ignore all docker-compose files (useful if you only commit a base)
+
+# === Miscellaneous / Database ===
+*.sqlite            # SQLite database files
+*.db                # Generic database files
+dump.sql            # SQL database dumps
+*.sqlc.yaml         # SQLC config (if local)

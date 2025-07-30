@@ -1,0 +1,26 @@
+.rhp-btn{
+    color:  #414BEA;
+    border: 1px solid #414BEA;
+    margin-left: 1.3rem;
+    margin-right: 0.5rem;
+}
+.row>*{
+    width: fit-content;
+}
+.ipoImage{
+    height: 3rem;
+    width: 5rem;
+}
+.drhp-btn{
+    background-color: #F05537;
+    color: white;
+}
+.ipo-details{
+    /* gap: 0.8rem; */
+    flex-wrap: wrap;
+}
+.prop{
+    padding: 0.5rem;
+    min-width: 30%;
+    max-height: 70px;
+}

@@ -1,0 +1,58 @@
+<div class="container col-lg-4 col-md-6 col-sm-7">
+    <div class="title">
+        <!-- <img src="../../assets/bluestock-logo.png" alt="Bluestock Logo" class="logo" />
+        <h3 class="font-poppins bluestock-header">BLUESTOCK</h3> -->
+        <img src="../../../assets/site-logo.png.png" alt="" height="50px" width="75%">
+    </div>
+
+    <form [formGroup]="loginForm" class="font-poppins" (ngSubmit)="submitForm()">
+        <div class="login-form">
+            <div class="my-3">
+                <label for="email" class="my-1">Email Address</label>
+                <div>
+                    <input type="text" placeholder="Enter email" formControlName="email" />
+                </div>
+            </div>
+
+            <p *ngIf="isEmailValid('email')" class="text-danger">email should be valid</p>
+            <p *ngIf="isEmailRequired('email')" class="text-danger">email required</p>
+
+            <div class="my-3">
+                <div class="d-flex justify-content-between">
+                    <label for="password" class="my-1">Password</label>
+                    <a class="text-primary" (click)="goToForgotPWPage()">Forgot Password?</a>
+                </div>
+
+                <div class="d-flex">
+                    <input #passwordInput type="password" class="password-input" placeholder="Password" formControlName="password" />
+                    <i #eyeIcon id="togglePassword" (click)="showPassword(passwordInput, eyeIcon)" class="fa-regular fa-eye fa-2x mx-1 eye-icon" style="color: #2e2e2e;"></i>
+                </div>
+            </div>
+
+            <p *ngIf="inValidCredentials" class="text-danger">Username or password is incorrect</p>
+        </div>
+        <div class="d-flex justify-content-between p-2 align-items-center border border-success my-4 rounded-4">
+            <div class="d-flex">
+                <input type="checkbox" class="mx-3"><label>I am not a robot</label>
+            </div>
+            <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/recaptcha-icon.png"
+                alt="" height="40px" width="40px">
+        </div>
+        <div class="d-flex align-items-center">
+            <input type="checkbox" class="mx-2"><label>Keep me signed in</label>
+        </div>
+         <button class="btn my-3" type="submit">Login</button>
+         <div class="d-flex justify-content-center my-2 w-100">
+            <hr class="w-25">
+            <button class=" btn-muted border-0 text-muted">or sign in with </button>
+            <hr class="w-25">
+         </div>
+         <div class="d-flex justify-content-center my-3 w-100">
+            <button class="border-0 rounded-2 w-100"><img src="https://th.bing.com/th/id/OIP.bezdpvF7kG5CBJUSWVBSIgHaHa?w=231&h=220&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" alt="" width="40px" height="40px" class="mx-2">Continue with Google</button>
+         </div>
+         <div class="text-center my-2">
+            <a (click)="goToSignUpPage()" class="text-blue fw-semibold">Create an account</a>
+         </div>
+         
+    </form>
+</div>

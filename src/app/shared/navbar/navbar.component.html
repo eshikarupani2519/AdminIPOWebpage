@@ -1,0 +1,23 @@
+<nav class="navbar d-flex font-poppins">
+    <div class="search d-flex justify-content-between">
+        <input type="text" [(ngModel)]="searchTerm" (input)="searchIPO()" placeholder="Search" class="search-input">
+        <div class="search-icon"><i class="fa-solid fa-magnifying-glass text-muted"></i></div>
+    </div>
+
+ <div class="profile d-flex align-items-center justify-self-end">
+        <div class="initial-letter-icon d-flex justify-content-center align-items-center mx-1" *ngIf="loggedInUser">
+            {{loggedInUser.charAt(0)}}
+            
+        </div>
+        <div class="username text-muted d-flex align-items-center justify-content-between justify-self-end">
+            <p class="m-0">Hi, {{loggedInUser}} </p>
+            <a><i class="fa-solid fa-angle-down"></i></a>
+        </div>
+    </div>
+    <div>
+        <a><i class="fa-solid fa-bell text-muted mx-3"></i></a>
+        
+    </div>
+
+   
+</nav>

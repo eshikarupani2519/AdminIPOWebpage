@@ -1,0 +1,77 @@
+.btn-blue-white{
+    border: 1px solid #4F80E1;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    background-color: white;
+}
+.body,h5,h6{
+    font-size: 0.9rem;
+
+}
+.body{
+    overflow-y: scroll;
+    height: 77vh;
+}
+.mini-sidebar{
+    border-right: 1px solid gray;
+    position: fixed;
+    left: 20%;
+    top: 120px;
+    width: 20%;
+    height: 80vh;
+}
+.details{
+    position: absolute;
+    left: 25%;
+}
+.custom-file-upload,.delete-btn{
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+.inputs{
+    display: flex;
+    flex-wrap: wrap;
+}
+.input{
+   min-width: 50%;
+}
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+.input-file-btn{
+    border: 1px solid gray;
+}
+
+/* --------------- LOADER STYLES --------------- */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* High z-index to cover everything */
+  color: white;
+  font-size: 1.2rem;
+}
+
+.spinner {
+  border: 5px solid rgba(255, 255, 255, 0.3); /* Light grey border */
+  border-top: 5px solid #4F80E1; /* Your brand blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite; /* Faster spin */
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* --------------- END LOADER STYLES --------------- */

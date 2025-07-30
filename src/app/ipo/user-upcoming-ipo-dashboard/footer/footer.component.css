@@ -1,0 +1,55 @@
+.all-links{
+    display: flex;
+    justify-content: space-around;
+}
+ul{
+    display: flex;
+    flex-direction: column;
+}
+ul strong{
+    margin-bottom: 1rem;
+}
+li{
+    list-style: none;
+    margin-bottom: 10px;
+}
+li a{
+    text-decoration: none;
+        color: gray;
+}
+.container{
+    font-size: 0.8rem;
+}
+.icons{
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 60px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.bluestock-header {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #000;
+}
+.startup-india-logo{
+    width: 10rem;
+    height: 5rem;
+}
+
+.investment-details{
+  
+    font-size: 1rem;
+  
+}

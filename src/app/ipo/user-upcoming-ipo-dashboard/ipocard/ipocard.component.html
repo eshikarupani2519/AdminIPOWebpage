@@ -1,0 +1,56 @@
+<div class="company-header d-flex flex-wrap align-items-center row justify-content-center">
+    <img [src]="getCompanyLogoUrl()" alt="Company Logo" class="ipoImage col-4 col-sm-12">
+    <h5 class="text-blue col-sm-12 col-8 text-center">{{ipo.company_name}}</h5>
+</div>
+
+<div class="d-flex ipo-details justify-content-evenly flex-wrap">
+    <div class="d-flex flex-column prop column-gap-4">
+        <p class="text-muted m-0">PRICE BAND</p>
+        <p>{{ipo.price_band}}</p>
+    </div>
+    <div class="d-flex flex-column prop column-gap-4">
+        <p class="text-muted m-0">OPEN</p>
+        <p>{{ipo.open_date}}</p>
+    </div>
+    <div class="d-flex flex-column prop column-gap-4">
+        <p class="text-muted m-0">CLOSE</p>
+        <p>{{ipo.close_date}}</p>
+    </div>
+    <div class="d-flex flex-column prop column-gap-4">
+        <p class="text-muted m-0">ISSUE SIZE</p>
+        <p>{{ipo.issue_size}}</p>
+    </div>
+    <div class="d-flex flex-column prop column-gap-4">
+        <p class="text-muted m-0">ISSUE TYPE</p>
+        <p>{{ipo.issue_type}}</p>
+    </div>
+    <div class="d-flex flex-column prop column-gap-4">
+        <p class="text-muted m-0">LISTING DATE</p>
+        <p>{{ipo.listing_date}}</p>
+    </div>
+    <!-- <ng-container *ngIf="ipo.status === 'New Listed'">
+        <div class="d-flex flex-column prop column-gap-4">
+            <p class="text-muted m-0">IPO PRICE</p>
+            <p>₹{{ipo.ipo_price}}</p>
+        </div>
+        <div class="d-flex flex-column prop column-gap-4">
+            <p class="text-muted m-0">LISTING PRICE</p>
+            <p>₹{{ipo.listing_price}}</p>
+        -         <div class="d-flex flex-column prop column-gap-4">
+            <p class="text-muted m-0">LISTING GAIN</p>
+            <p>{{ipo.listing_gain}} %</p>
+        </div>
+        <div class="d-flex flex-column prop column-gap-4">
+            <p class="text-muted m-0">CMP</p>
+            <p>₹{{ipo.cmp}}</p>
+        </div>
+        <div class="d-flex flex-column prop column-gap-4">
+            <p class="text-muted m-0">CURRENT RETURN</p>
+            <p>{{ipo.current_return}} %</p>
+        </div>
+    </ng-container> -->
+</div>
+<div class="buttons">
+    <a class="btn rhp-btn" [href]="getRhpUrl()" target="_blank" [download]="ipo.rhp" [class.disabled]="!ipo.rhp">RHP</a>
+    <a class="btn drhp-btn" [href]="getDrhpUrl()" target="_blank" [download]="ipo.drhp" [class.disabled]="!ipo.drhp">DRHP</a>
+</div>

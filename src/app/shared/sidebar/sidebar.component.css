@@ -1,0 +1,44 @@
+.bluestock-cname{
+    height:60px ;
+    border-bottom: 1px solid gray;
+}
+.text-gray{
+    color: rgb(110, 115, 120);
+}
+.initials{
+    background-color: #5A67BA;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+.sidebar{
+    width: 20%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    background-color: #F1F2F7;
+    font-size: 0.9rem;
+}
+.text-purple{
+    color: #5A67BA;
+    font-weight: 600;
+}
+
+a{
+    text-decoration: none;
+}
+a i{
+    margin-right: 1.3rem;
+    font-size: 1.3rem;
+}
+li{
+    list-style: none;
+    margin-top: 0.4rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}

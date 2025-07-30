@@ -1,0 +1,79 @@
+.upcoming-ipo-body{
+    font-size: 0.9rem;
+}
+.button{
+    background-color: #eef1f5;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+}
+.text-purple{
+    color: #5A6ACF;
+    font-weight: 500;
+}
+.btn-ongoing{
+    border:1px solid #41BC63;
+    color: #41BC63;
+    background-color: #ecfff2;
+    
+}
+.btn-newListed{
+     border:1px solid #BC4141;
+    color: #BC4141;
+    background-color: #fee8e8;
+}
+.btn-coming{
+     border:1px solid  #BC9241;
+    color:  #BC9241;
+    background-color:  #fffcdd;
+   
+}
+.page-item.active .page-link {
+    background-color: #4F80E1;
+    color: white;
+    border-color: #4F80E1;
+}
+.page-item.disabled .page-link {
+    color: #ccc;
+    pointer-events: none;
+    background-color: #f9f9f9;
+}
+
+/* Styles for disabling links/buttons when loading */
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* --------------- LOADER STYLES (Copy from register-ipo-details.component.css or a global stylesheet) --------------- */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* High z-index to cover everything */
+  color: white;
+  font-size: 1.2rem;
+}
+
+.spinner {
+  border: 5px solid rgba(255, 255, 255, 0.3); /* Light grey border */
+  border-top: 5px solid #4F80E1; /* Your brand blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite; /* Faster spin */
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* --------------- END LOADER STYLES --------------- */

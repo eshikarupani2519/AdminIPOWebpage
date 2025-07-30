@@ -1,0 +1,23 @@
+<div class="sidebar font-poppins">
+    <div class="bluestock-cname d-flex align-items-center justify-content-center p-2">
+        <div class="initials mx-1">BF</div>
+        <div class="text-purple">Bluestock Fintech</div>
+    </div>
+    <div class="menu p-2 text-gray">
+        <p>MENU</p>
+        <ul class="p-0">
+            <a (click)="navigateToPage('admin-dashboard')" [class]="getLinkClass('admin-dashboard')"><li class=" d-flex align-items-center"><i class="fa-solid fa-square-poll-vertical  "></i>Dashboard</li></a>
+            <a (click)="navigateToPage('upcoming-IPO')" [class]="getLinkClass('upcoming-IPO')"> <li class=" d-flex align-items-center"><i class="fa-solid fa-cart-shopping "></i>Manage IPO</li></a>
+            <a (click)="navigateToPage('')"><li class=" d-flex align-items-center"><i class="fa-solid fa-square-poll-horizontal "></i>IPO Subscription</li></a>
+            <a (click)="navigateToPage('')"><li class=" d-flex align-items-center"><i class="fa-solid fa-comment-dots "></i>IPO Allotment</li></a>  
+        </ul>
+        <p>OTHERS</p>
+        <ul class="p-0">
+            <a (click)="navigateToPage('')"><li class=" d-flex align-items-center"><i class="fa-solid fa-gear "></i>Settings</li></a>
+            <a (click)="navigateToPage('')"><li class=" d-flex align-items-center"><i class="fa-solid fa-wallet "></i>API Manager</li></a>
+            <a (click)="navigateToPage('')"> <li class=" d-flex align-items-center"><i class="fa-solid fa-user "></i>Accounts</li></a>
+            <a (click)="navigateToPage('')"><li class=" d-flex align-items-center"><i class="fa-solid fa-circle-info "></i>Help</li></a>
+
+        </ul>
+    </div>
+</div>

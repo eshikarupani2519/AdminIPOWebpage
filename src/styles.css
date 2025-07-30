@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+.font-poppins{
+   font-family: "Poppins", sans-serif;
+ color: black;
+}
+.bluestock-header{
+  padding-top: 10px;
+ font-weight: 700;
+  font-style: normal;
+  font-size: 30px;
+}
+.blue-white-btn {
+  padding: 8px 16px;
+  background:#3F52FF;
+  border: none;
+  color: #fff;
+  border-radius: 0;
+}
+.text-blue{
+  color:#3F52FF ;
+}
