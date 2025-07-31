@@ -36,53 +36,87 @@ const fs = require("fs");
 //   }
 // };
 
+// exports.getAllIPOs = async (req, res) => {
+//   try {
+//     const result = await db.query(`SELECT * FROM ipos`);
+//     res.json(result.rows);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: 'Error fetching IPOs' });
+//   }
+// };
+
 exports.getAllIPOs = async (req, res) => {
   try {
-    const result = await db.query(`SELECT * FROM ipos`);
+    const query = `SELECT i.*,c.logo FROM ipos AS i LEFT JOIN companies AS c ON i.company_id = c.id;`;
+    const result = await db.query(query);
     res.json(result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error fetching IPOs' });
   }
 };
-
 exports.getNewListedIPOs = async (req, res) => {
-  try {
-    const result = await db.query(`SELECT * FROM ipos WHERE status = 'New Listed'`);
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error fetching New Listed IPOs' });
-  }
+  try {
+    const query = `
+      SELECT
+        i.*,
+        c.logo
+      FROM
+        ipos AS i
+      LEFT JOIN
+        companies AS c ON i.company_id = c.id
+      WHERE
+        i.status = 'New Listed';
+    `;
+    const result = await db.query(query);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching New Listed IPOs' });
+  }
 };
 exports.registerIPO = async (req, res) => {
+  const {
+    companyName,
+    priceBand,
+    open,
+    close,
+    issueSize,
+    issueType,
+    listingDate,
+    status,
+    ipoPrice,
+    listingPrice,
+    listingGain,
+    cmp,
+    currentReturn,
+  } = req.body;
+
+  const rhpFile = req.files?.rhp?.[0]?.filename || null;
+  const drhpFile = req.files?.drhp?.[0]?.filename || null;
+
   try {
-    const data = req.body;
-    const rhpFile = req.files?.rhp?.[0]?.filename || null;
-    const drhpFile = req.files?.drhp?.[0]?.filename || null;
+    // Step 1: Find the company_id from the companies table
+    const companyResult = await db.query(
+      `SELECT id FROM companies WHERE name = $1`,
+      [companyName]
+    );
 
-    const {
-      companyName,
-      priceBand,
-      open,
-      close,
-      issueSize,
-      issueType,
-      listingDate,
-      status,
-      ipoPrice,
-      listingPrice,
-      listingGain,
-      cmp,
-      currentReturn
-    } = data;
+    // If the company doesn't exist, we can't create the IPO. Handle this error.
+    if (companyResult.rows.length === 0) {
+      return res.status(404).json({ message: 'Company not found.' });
+    }
 
+    const companyId = companyResult.rows[0].id;
+
+    // Step 2: Insert the new IPO record using the retrieved company_id
     const result = await db.query(
       `INSERT INTO ipos (
         company_name, price_band, open_date, close_date, issue_size,
         issue_type, listing_date, status, ipo_price, listing_price,
-        listing_gain, cmp, current_return, rhp, drhp
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+        listing_gain, cmp, current_return, rhp, drhp, company_id
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
       RETURNING *`,
       [
         companyName,
@@ -99,7 +133,8 @@ exports.registerIPO = async (req, res) => {
         cmp || null,
         currentReturn || null,
         rhpFile,
-        drhpFile
+        drhpFile,
+        companyId, // <--- This is the new, correct value
       ]
     );
 
@@ -308,10 +343,24 @@ exports.deleteDocument = async (req, res) => {
   }
 };
 exports.searchIPOs = async (req, res) => {
-  const keyword = `%${req.query.q || ''}%`;
-  const result = await db.query(
-    `SELECT * FROM ipos WHERE company_name ILIKE $1 OR status ILIKE $1 ORDER BY listing_date DESC`,
-    [keyword]
-  );
-  res.json(result.rows);
+  const keyword = `%${req.query.q || ''}%`;
+  try {
+    const query = `
+      SELECT
+        i.*,
+        c.logo
+      FROM
+        ipos AS i
+      LEFT JOIN
+        companies AS c ON i.company_id = c.id
+      WHERE
+        i.company_name ILIKE $1 OR i.status ILIKE $1
+      ORDER BY i.listing_date DESC;
+    `;
+    const result = await db.query(query, [keyword]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error searching IPOs' });
+  }
 };

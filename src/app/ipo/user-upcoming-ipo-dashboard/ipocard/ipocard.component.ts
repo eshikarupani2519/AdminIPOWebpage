@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { environment } from 'src/environments/environment'; // Still needed for RHP/DRHP
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-ipocard',
@@ -10,8 +10,6 @@ export class IpocardComponent {
   @Input()
   ipo: any;
 
-  // Base URL for static files (e.g., uploads)
-  // Still needed for RHP/DRHP documents
   private uploadsBaseUrl = environment.apiUrl.replace('/api', '/uploads');
 
   getRhpUrl(): string {
@@ -22,21 +20,12 @@ export class IpocardComponent {
     return this.ipo.drhp ? `${this.uploadsBaseUrl}/${this.ipo.drhp}` : '#';
   }
 
+  // This function is now much simpler as the backend sends the full logo URL
   getCompanyLogoUrl(): string {
-    console.log(this.ipo)
-    const logoSource = this.ipo.logo; // This is now expected to be a full URL
-    // Return the URL directly if it exists, otherwise use a placeholder
-    
-    // const logoUrl = logoSource && typeof logoSource === 'string' 
-    //                 ? logoSource
-    //                 : '../../assets/placeholder-logo.png'; // Fallback to a local placeholder
-
-    // --- ADDED FOR DEBUGGING LOGO (keep this for now, it's helpful) ---
-    console.log(`IPO ID: ${this.ipo.id || 'N/A'}, Company: ${this.ipo.company_name || 'N/A'}`);
-    console.log(`  company_logo from IPO object: "${logoSource}"`);
-    console.log(`  Resolved Logo URL: "${logoSource}"`);
-    // --- END DEBUGGING LOGO ---
-
-    return logoSource;
+    console.log(this.ipo.logo+":ipo logo")
+    return this.ipo.logo 
+    // && typeof this.ipo.logo === 'string'
+    //   ? this.ipo.logo
+    //   : '../../assets/placeholder-logo.png'; // Make sure this path is correct
   }
 }

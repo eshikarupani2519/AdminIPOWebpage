@@ -62,8 +62,7 @@ nav{
   background: transparent;
   border: none;
 }
-
-/*  */
-/* .navbar-toggler-icon::after{
+.navbar-toggler-icon{
   background-image: url("https://fontawesome.com/icons/grip-vertical?f=classic&s=solid&pc=%230d0d0d&sc=%230d0d0d");
-} */
+  border: 1px solid transparent;
+}
