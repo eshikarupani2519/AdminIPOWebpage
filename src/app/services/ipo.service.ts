@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 
@@ -58,5 +59,11 @@ getNewListedIPOs() {
   //be
   getStats() {
     return this.http.get(`http://localhost:5000/api/admin/stats`);
+  }
+
+  checkCompanyExists(companyName: string): Observable<boolean> {
+    return this.http.get<any>(`${this.baseUrl}/ipos/company/check?name=${companyName}`).pipe(
+      map(res => res.exists)
+    );
   }
 }

@@ -20,12 +20,19 @@ export class IpocardComponent {
     return this.ipo.drhp ? `${this.uploadsBaseUrl}/${this.ipo.drhp}` : '#';
   }
 
-  // This function is now much simpler as the backend sends the full logo URL
-  getCompanyLogoUrl(): string {
-    console.log(this.ipo.logo+":ipo logo")
-    return this.ipo.logo 
-    // && typeof this.ipo.logo === 'string'
-    //   ? this.ipo.logo
-    //   : '../../assets/placeholder-logo.png'; // Make sure this path is correct
+  // RECTIFIED: This function now builds the full URL for the logo
+ getCompanyLogoUrl(): string {
+    if (!this.ipo?.logo) {
+      // Return a default placeholder if no logo is available
+      return '../../assets/nova-logo.png'; 
+    }
+
+    // Check if the logo string is already a full URL
+    if (this.ipo.logo.startsWith('http://') || this.ipo.logo.startsWith('https://')) {
+      return this.ipo.logo; // It's already a complete URL, use it as is
+    }
+
+    // Otherwise, assume it's a filename and build the URL
+    return `${this.uploadsBaseUrl}/${this.ipo.logo}`;
   }
 }

@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<!-- <app-navbar></app-navbar>
 <app-sidebar></app-sidebar>
 <div style="margin-top: 70px;width: 80%;position: absolute;right: 0;padding:0.8rem;">
     <h5>Dashboard</h5>
@@ -15,4 +15,94 @@
         </div>
     </div>
 
+</div> -->
+
+
+<app-navbar></app-navbar>
+<app-sidebar></app-sidebar>
+<div style="margin-top: 70px;width: 80%;position: absolute;right: 0;padding:0.8rem;">
+    <h5>Dashboard</h5>
+    <div class="d-flex">
+        <div style="width: 35%;border-right: 1px solid gray; padding-right: 1rem;position:relative; z-index:1 ;">
+            <h6>IPO Dashboard India</h6>
+            <p class="text-muted"> <span class="text-success fw-bold">↑{{ipoGainCount}} </span> IPO in Gain</p>
+            
+            <div class="ipo-dashboard-circles-container d-flex justify-content-center align-items-center position-relative" style="height: 250px;">
+                <div class="ipo-circle total-ipo-circle position-absolute d-flex justify-content-center align-items-center flex-column">
+                    <span class="fs-4 fw-bold text-white">{{ totalIPOs }}</span>
+                    <span class="text-white">Total IPO</span>
+                </div>
+                <div class="ipo-circle ipo-loss-circle position-absolute d-flex justify-content-center align-items-center flex-column" style="left: 10%; top: 20%;">
+                    <span class="fs-4 fw-bold text-white">{{ ipoLossCount }}</span>
+                    <span class="text-white">IPO in Loss</span>
+                </div>
+                <div class="ipo-circle ipo-gain-circle position-absolute d-flex justify-content-center align-items-center flex-column" style="left: 30%; bottom: 20%;">
+                    <span class="fs-4 fw-bold text-white">{{ ipoGainCount }}</span>
+                    <span class="text-white">IPO in Gain</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 30%;border-right: 1px solid gray; padding-left: 1rem; padding-right: 1rem;">
+            <h6>Quick Links</h6>
+            <p class="text-muted">Adipiscing elit, sed do eiusmod tempor</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="circle-sm bg-secondary me-2 d-inline-block"></div> NSE India
+                    </div>
+                    <a href="https://www.nseindia.com/" target="_blank" class="text-secondary text-decoration-none">Visit Now</a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="circle-sm bg-secondary me-2 d-inline-block"></div> BSE India
+                    </div>
+                    <a href="https://www.bseindia.com/" class="text-secondary text-decoration-none">Visit Now</a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="circle-sm bg-secondary me-2 d-inline-block"></div> SEBI
+                    </div>
+                    <a href="https://www.sebi.gov.in/" class="text-secondary text-decoration-none">Visit Now</a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="circle-sm bg-secondary me-2 d-inline-block"></div> Money Control
+                    </div>
+                    <a href="https://www.moneycontrol.com" class="text-secondary text-decoration-none">Visit Now</a>
+                </li>
+            </ul>
+        </div>
+
+        <div style="width: 35%; padding-left: 1rem;">
+            <div class="d-flex justify-content-between align-items-center">
+                <h6>Main Board IPO</h6>
+                <button class="btn btn-sm btn-outline-primary">View Report</button>
+            </div>
+            <p class="text-muted">From 01 Jan 2024</p>
+            <div class="chart-container" style="height: 250px; width: 250px; margin: 0 auto; position: relative;">
+                <canvas id="mainBoardIpoChart"></canvas>
+            </div>
+            <div class="d-flex justify-content-around mt-4">
+                <div class="text-center">
+                    <div class="legend-circle bg-primary me-2 d-inline-block"></div>
+                    <span class="fw-bold">Upcoming</span>
+                    <br>
+                    <span class="text-muted">{{ upcomingIPOs }}</span>
+                </div>
+                <div class="text-center">
+                    <div class="legend-circle bg-info me-2 d-inline-block"></div>
+                    <span class="fw-bold">New Listed</span>
+                    <br>
+                    <span class="text-muted">{{ newListedIPOs }}</span>
+                </div>
+                <div class="text-center">
+                    <div class="legend-circle bg-success me-2 d-inline-block"></div>
+                    <span class="fw-bold">Ongoing</span>
+                    <br>
+                    <span class="text-muted">{{ ongoingIPOs }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,6 +1,7 @@
 .upcoming-ipo-body{
     font-size: 0.9rem;
 }
+
 .button{
     background-color: #eef1f5;
     border: none;
@@ -77,3 +78,21 @@
   100% { transform: rotate(360deg); }
 }
 /* --------------- END LOADER STYLES --------------- */
+@media (max-width:550px) {
+  .upcoming-ipo-body{
+    font-size: 0.8rem;
+}
+td{
+  padding: 2px;
+  height: 80px;
+ 
+}
+
+}
+@media (max-width:524px) {
+  .upcoming-ipo-body{
+    
+    left: 30% !important;
+    max-width: 70%;
+}
+}

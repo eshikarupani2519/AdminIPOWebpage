@@ -75,3 +75,25 @@
   100% { transform: rotate(360deg); }
 }
 /* --------------- END LOADER STYLES --------------- */
+
+@media (max-width:544px) {
+ .mini-sidebar{
+display: none;
+ }
+
+ .body{
+  position: fixed;
+  top: 150px !important;
+  width: 90% !important;
+  left: 15% !important;
+  overflow-x: hidden;
+ }
+ .body-nav{
+  position: fixed;
+  top: 170px;
+  left: 30%;
+  word-wrap: break-word;
+  flex-direction: column;
+  
+ }
+}

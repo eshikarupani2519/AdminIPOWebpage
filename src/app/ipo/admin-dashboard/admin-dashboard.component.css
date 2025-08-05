@@ -1,0 +1,63 @@
+.ipo-circle {
+    border-radius: 50%;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.total-ipo-circle {
+    position: relative;
+    background-color: #F99C30; /* Orange */
+    width: 150px;
+    height: 150px;
+    transform: translate(35%, 5%);
+    z-index: 2;
+    filter: opacity(85%);
+}
+
+.ipo-loss-circle {
+    position: relative;
+    background-color:#6463D6; /* Purple */
+    width: 110px;
+    height: 110px;
+    transform: translate(30%, -30%);
+    z-index: 3;
+    filter: opacity(75%);
+    /* padding: 15px; */
+}
+
+.ipo-gain-circle {
+    position: relative;
+    background-color:#2FBFDE; 
+    width: 120px;
+    height: 120px;
+    transform: translate(-70%, 40%);
+    z-index: 2;
+    filter: opacity(95%);
+}
+
+.circle-sm {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.legend-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Adjust colors to match your theme */
+.legend-circle.bg-primary { background-color: #8593ED !important; } /* Purple for Upcoming */
+.legend-circle.bg-info { background-color: #5A6ACF !important; } /* Blue for New Listed */
+.legend-circle.bg-success { background-color: #C7CEFF !important; } /* Green for Ongoing */
+
+.bg-primary { background-color:#8593ED !important; }
+.bg-info { background-color:#5A6ACF !important; }
+.bg-success { background-color:#C7CEFF !important; }

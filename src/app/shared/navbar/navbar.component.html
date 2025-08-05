@@ -1,7 +1,7 @@
 <nav class="navbar d-flex font-poppins">
     <div class="search d-flex justify-content-between">
-        <input type="text" [(ngModel)]="searchTerm" (input)="searchIPO()" placeholder="Search" class="search-input">
-        <div class="search-icon"><i class="fa-solid fa-magnifying-glass text-muted"></i></div>
+        <input type="text" [(ngModel)]="searchTerm"  placeholder="Search" class="search-input" (input)="searchIPO()">
+        <div class="search-icon"><i class="fa-solid fa-magnifying-glass text-muted" style="cursor: pointer;" ></i></div>
     </div>
 
  <div class="profile d-flex align-items-center justify-self-end">

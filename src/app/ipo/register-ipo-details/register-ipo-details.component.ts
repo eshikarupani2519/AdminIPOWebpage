@@ -1,174 +1,246 @@
+// register-ipo-details.ts
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core'; // Added OnInit
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatabaseService } from 'src/app/database.service';
 import { IpoService } from 'src/app/services/ipo.service';
-import { finalize } from 'rxjs/operators'; // Import finalize operator
-
+import { finalize } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-register-ipo-details',
   templateUrl: './register-ipo-details.component.html',
   styleUrls: ['./register-ipo-details.component.css']
 })
-export class RegisterIpoDetailsComponent implements OnInit { // Implement OnInit
+export class RegisterIpoDetailsComponent implements OnInit {
+  // Existing properties
+   // Make sure this import exists
+
+// ... inside your RegisterIpoDetailsComponent class
+private backendBaseUrl = environment.apiUrl.replace('/api', ''); // Get the base URL (e.g., 'http://localhost:5000')
+
+getLogoPath(logo: string | null): string {
+  if (!logo) {
+    // Return a default placeholder image if no logo is available
+    return 'assets/nse-india-logo.png';
+  }
+
+  // Check if the logo is a full URL (http or https)
+  if (logo.startsWith('http://') || logo.startsWith('https://')) {
+    return logo;
+  }
+  
+  // If it's not a full URL, it's a filename from our server
+  // We need to construct the full path to the uploads folder
+  return `${this.backendBaseUrl}/uploads/${logo}`;
+}
   existingRhpFilename: string | null = null;
   existingDrhpFilename: string | null = null;
+  isNewListedDetailsLocked: boolean = false;
+  isLoading: boolean = false;
+  editingId: number | null = null;
 
-  isLoading: boolean = false; // <-- ADDED: Property to control loader visibility
+  // New properties for logo handling
+  logoFile: File | null = null; // To hold the selected logo file
+  logoPreview: string | ArrayBuffer | null = 'assets/nse-india-logo.png'; // To display a preview of the logo
+  companyExists: boolean = false; // To track if the company exists in the DB
 
-  constructor(private fb: FormBuilder, private ipoService: IpoService, private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private fb: FormBuilder,
+    private ipoService: IpoService,
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   companyDetails = new FormGroup({
-    companyName: new FormControl('Vodafone idea', [Validators.required]),
-    priceBand: new FormControl('123-234', [Validators.required]),
-    open: new FormControl('01-02-2024', [Validators.required]),
-    close: new FormControl('02-03-2024', [Validators.required]),
-    issueSize: new FormControl('23', [Validators.required]),
+    companyName: new FormControl('', [Validators.required]),
+    priceBand: new FormControl('', [Validators.required]),
+    open: new FormControl('', [Validators.required]),
+    close: new FormControl('', [Validators.required]),
+    issueSize: new FormControl('', [Validators.required]),
     issueType: new FormControl('ongoing', [Validators.required]),
-    listingDate: new FormControl('03-04-2024', [Validators.required]),
-    status: new FormControl('', [Validators.required])
-  })
-  // for new listed ipos,additional info to collect
+    listingDate: new FormControl('', [Validators.required]),
+    status: new FormControl('', [Validators.required]),
+    // We add a FormControl for the logo here, but it's not bound to an input
+    // The logo file is handled separately with the onLogoFileChange method
+    companyLogo: new FormControl('')
+  });
+
   newListedDetails = new FormGroup({
     ipoPrice: new FormControl(''),
     listingPrice: new FormControl(''),
     listingGain: new FormControl(''),
-    // listingDate: new FormControl(''),
     cmp: new FormControl(''),
     currentReturn: new FormControl(''),
     rhp: new FormControl(''),
-    drhp: new FormControl(''),
-  })
-  editingId: number | null = null; // Track if in edit mode
+    drhp: new FormControl('')
+  });
+
   enableNewListedForm() {
     this.newListedDetails.enable();
-
     this.newListedDetails.get('ipoPrice')?.setValidators([Validators.required]);
     this.newListedDetails.get('listingPrice')?.setValidators([Validators.required]);
     this.newListedDetails.get('listingGain')?.setValidators([Validators.required]);
-    // Note: listingDate in newListedDetails is commented out in HTML, so its validator might not be effective unless uncommented
     this.newListedDetails.get('cmp')?.setValidators([Validators.required]);
     this.newListedDetails.get('currentReturn')?.setValidators([Validators.required]);
-
     this.newListedDetails.updateValueAndValidity();
   }
+navigateToPage(page:string){
+  this.router.navigate([page]);
+}
+ngOnInit() {
+  // Subscribe to query parameters to check if we're in edit mode.
+  this.route.queryParams.subscribe(params => {
+    const id = params['id'];
 
+    if (id) {
+      // We are in EDIT mode
+      this.editingId = +id;
 
-  ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        this.editingId = +id;
+      // CRITICAL FIX: Since we're editing an existing IPO, the company already exists.
+      // This will prevent the "new company requires a logo" alert.
+      this.companyExists = true;
 
-        this.ipoService.getIPO(this.editingId).subscribe((ipo: any) => {
-          console.log('IPO response from API:', ipo);
-          console.log('Status from API:', ipo.status);
-          const isNewListed = ipo.status === 'New Listed';
-
-          // Patch company details first
-          this.companyDetails.patchValue({
-            companyName: ipo.company_name,
-            priceBand: ipo.price_band,
-            open: ipo.open_date,
-            close: ipo.close_date,
-            issueSize: ipo.issue_size,
-            issueType: ipo.issue_type,
-            listingDate: ipo.listing_date,
-            status: ipo.status  // Patch this AFTER subscribing below
-          });
-
-          // Force enable if status is New Listed BEFORE patching listing details
-          if (isNewListed) {
-            this.enableNewListedForm();
-
-            // Patch the listing-related fields after enabling
-            this.newListedDetails.patchValue({
-              ipoPrice: ipo.ipo_price,
-              listingPrice: ipo.listing_price,
-              listingGain: ipo.listing_gain,
-              // listingDate: ipo.listing_date, // This field is commented out in HTML, consider if it's truly needed
-              cmp: ipo.cmp,
-              currentReturn: ipo.current_return
-
-            });
-
-          } else {
-            this.newListedDetails.disable(); // Ensure disabled if not new listed
-          }
+      this.ipoService.getIPO(this.editingId).subscribe((ipo: any) => {
+        console.log('IPO response from API:', ipo);
+        
+        // Patch the form with existing IPO data
+        this.companyDetails.patchValue({
+          companyName: ipo.company_name,
+          priceBand: ipo.price_band,
+          open: ipo.open_date,
+          close: ipo.close_date,
+          issueSize: ipo.issue_size,
+          issueType: ipo.issue_type,
+          listingDate: ipo.listing_date,
+          status: ipo.status,
         });
-      }
-    });
 
-    // Attach listener AFTER initial load
-    this.companyDetails.get('status')?.valueChanges.subscribe(status => {
-      if (status === 'New Listed') {
-        this.enableNewListedForm();
-      } else {
-        this.newListedDetails.reset();
-        this.newListedDetails.disable();
-      }
-    });
-  }
+        // CRITICAL FIX: Correctly set the logo preview URL.
+        // It will either be the external URL or the path to the uploaded file.
+        this.logoPreview = this.getLogoPath(ipo.logo);
+        
+        // Set existing RHP/DRHP filenames
+        this.existingRhpFilename = ipo.rhp;
+        this.existingDrhpFilename = ipo.drhp;
 
-  onStatusChange() {
-    const status = this.companyDetails.get('status')?.value;
-    if (status === 'New Listed') {
+        // Conditional logic for New Listed details
+        if (ipo.ipo_price) {
+          this.isNewListedDetailsLocked = true;
+          this.newListedDetails.patchValue({
+            ipoPrice: ipo.ipo_price,
+            listingPrice: ipo.listing_price,
+            listingGain: ipo.listing_gain,
+            cmp: ipo.cmp,
+            currentReturn: ipo.current_return,
+          });
+          this.newListedDetails.disable();
+        } else {
+          this.newListedDetails.enable();
+        }
+      });
+    } else {
+      // We are in CREATE new IPO mode
+      this.newListedDetails.disable();
+      this.logoPreview = 'assets/nse-india-logo.png';
+      this.companyExists = false; // Initial state for a new company
+    }
+  });
+
+  // This subscription handles the form behavior when the 'status' changes
+  this.companyDetails.get('status')?.valueChanges.subscribe(status => {
+    if (!this.isNewListedDetailsLocked && status === 'New Listed') {
       this.enableNewListedForm();
     } else {
       this.newListedDetails.reset();
       this.newListedDetails.disable();
     }
+  });}
+deleteLogo(){
+  this.logoPreview=  'assets/nse-india-logo.png';
+}
+
+  // Method to check if the company exists
+  checkCompanyExistence() {
+    const companyName = this.companyDetails.get('companyName')?.value;
+    if (companyName) {
+      this.ipoService.checkCompanyExists(companyName).subscribe((exists: boolean) => {
+        this.companyExists = exists;
+      });
+    }
+  }
+
+  onLogoFileChange(event: Event) {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    if (file) {
+      this.logoFile = file;
+
+      // Display a preview of the logo
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.logoPreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onFileChange(event: any, type: 'rhp' | 'drhp') {
+    const file = event.target.files[0];
+    if (type === 'rhp') this.existingRhpFilename = file;
+    else if (type === 'drhp') this.existingDrhpFilename = file;
   }
 
   submitIPO() {
     const formValue = this.companyDetails.value;
-
-    if (this.companyDetails.invalid) {
-      this.companyDetails.markAllAsTouched();
-      alert("Fill all required company details.");
+  
+    // Add validation for logo upload if company doesn't exist
+    if (!this.companyExists && !this.logoFile) {
+      alert("A new company requires a logo upload.");
       return;
     }
-
-    const status = this.companyDetails.value.status;
-    if (status === 'New Listed' && this.newListedDetails.invalid) {
-      this.newListedDetails.markAllAsTouched();
-      alert("Fill all required listing details.");
-      return;
-    }
-
+  
+    // ... other form validations
+  
     const formData = new FormData();
+  
+    // Append company details
     const companyValues = this.companyDetails.value as Record<string, string | null>;
     for (const key in companyValues) {
       formData.append(key, companyValues[key] ?? '');
     }
-
+  
+    // Append new listed details
     (Object.keys(this.newListedDetails.value) as Array<keyof typeof this.newListedDetails.value>).forEach(key => {
       formData.append(key, this.newListedDetails.value[key] as string ?? '');
     });
-
-    if (this.rhpFile) formData.append('rhp', this.rhpFile);
-    if (this.drhpFile) formData.append('drhp', this.drhpFile);
-
-    this.isLoading = true; // <-- ADDED: Show loader before the request starts
-
+  
+    // Append the logo file if one was selected
+    if (this.logoFile) {
+      formData.append('logo', this.logoFile);
+    }
+  
+    // Append RHP and DRHP files
+    if (this.existingRhpFilename) formData.append('rhp', this.existingRhpFilename);
+    if (this.existingDrhpFilename) formData.append('drhp', this.existingDrhpFilename);
+  
+    this.isLoading = true;
+  
     const apiCall = this.editingId
       ? this.ipoService.updateIPO(this.editingId.toString(), formData)
       : this.ipoService.createIPO(formData);
-
+  
     apiCall.pipe(
       finalize(() => {
-        this.isLoading = false; // <-- ADDED: Hide loader when the request completes (success or error)
+        this.isLoading = false;
       })
     ).subscribe({
       next: () => {
         alert("IPO " + (this.editingId ? "updated" : "registered") + " successfully!");
-        this.router.navigate(['/upcoming-IPO']); // Navigate on success
+        this.router.navigate(['/upcoming-IPO']);
       },
       error: (error: HttpErrorResponse) => {
-        console.error('Error processing IPO:', error); // Changed from 'Error updating IPO:' for consistency
-
-        let errorMessage = 'Failed to process IPO.'; // Changed from 'Failed to update IPO.'
+        console.error('Error processing IPO:', error);
+        let errorMessage = 'Failed to process IPO.';
         if (error.error?.message) {
           errorMessage += ' ' + error.error.message;
         } else if (typeof error.error === 'string') {
@@ -178,26 +250,6 @@ export class RegisterIpoDetailsComponent implements OnInit { // Implement OnInit
         }
         alert(errorMessage);
       }
-    });
-  }
-
-  rhpFile: File | null = null;
-  drhpFile: File | null = null;
-
-  onFileChange(event: any, type: 'rhp' | 'drhp') {
-    const file = event.target.files[0];
-    if (type === 'rhp') this.rhpFile = file;
-    else if (type === 'drhp') this.drhpFile = file;
-  }
-
-  selectedFile!: File;
-
-  uploadFile() {
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
-
-    this.http.post(`http://localhost:5000/api/ipos/1/upload`, formData).subscribe(res => {
-      alert('Uploaded!');
     });
   }
 }

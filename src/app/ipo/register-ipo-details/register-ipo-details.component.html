@@ -1,17 +1,17 @@
 <app-navbar></app-navbar>
 <app-sidebar></app-sidebar>
 <div class=" mini-sidebar">
-    <p><i class="fa-solid fa-circle-info mx-3" style="color: #1c1e21;"></i>IPO Information</p>
-    <p><i class="fa-solid fa-clipboard-list mx-3" style="color: #1c1e21;"></i>IPO Info</p>
+    <p><i class="fa-solid fa-circle-info mx-lg-3" style="color: #1c1e21;"></i>IPO Information</p>
+    <p><i class="fa-solid fa-clipboard-list mx-lg-3 " style="color: #1c1e21;"></i>IPO Info</p>
 </div>
-<div class="d-flex justify-content-between align-items-center px-3"
+<div class="d-flex justify-content-between align-items-center px-3 body-nav"
     style="position: fixed;top:67px;left: 20%;width: 80%; ">
     <h5>Upcoming IPO Information</h5>
     <div class="d-flex gap-3">
         <button class="blue-white-btn rounded-3" (click)="submitIPO()" [disabled]="isLoading">
             {{ editingId ? 'Update' : 'Register' }}
         </button>
-        <button class="btn-blue-white text-blue" [disabled]="isLoading">Cancel</button>
+        <button class="btn-blue-white text-blue" [disabled]="isLoading" (click)="navigateToPage('upcoming-IPO')">Cancel</button>
     </div>
 </div>
 <p>Manage your IPO details</p>
@@ -26,7 +26,28 @@
             <div>
                 <h6>Company Logo</h6>
                 <div class="d-flex gap-2">
-                    <img src="../../../assets/nse-india-logo.png" height="70px" width="70px">
+                    <img [src]="logoPreview" height="70px" width="70px">
+                    <div>
+                        <h5 class="p-0 my-1">NSE India</h5>
+                        <p class=" p-0 mb-0">Tech Lead</p>
+                        <p class=" p-0 ">Pune</p>
+                    </div>
+                    <div>
+                    </div>
+                    <ng-container *ngIf="!companyExists">
+                        <label class="blue-white-btn custom-file-upload">
+                            Upload Logo
+                            <input type="file" (change)="onLogoFileChange($event)">
+                        </label>
+                    </ng-container>
+                    <ng-container >
+                        <button class="btn-blue-white p-1 delete-btn px-3 text-blue" (click)="deleteLogo()">Delete</button>
+                    </ng-container>
+                </div>
+                
+                <!-- <div class="d-flex gap-2">
+                    <img *ngIf="companyLogo" src={{companyLogo}} height="70px" width="70px" >
+                    <img *ngIf="!companyLogo" height="70px" width="70px" src="../../../assets/nse-india-logo.png" alt="">
                     <div>
                         <h5 class="p-0 my-1">NSE India</h5>
                         <p class=" p-0 mb-0">Tech Lead</p>
@@ -34,10 +55,10 @@
                     </div>
                     <label class="blue-white-btn custom-file-upload">
                         Upload Logo
-                        <input type="file">
+                        <input type="file" [(ngModel)]="companyLogo">
                     </label>
                     <button class="btn-blue-white p-1 delete-btn px-3 text-blue">Delete</button>
-                </div>
+                </div>-->
                 <div class="w-100">
                     <form class="inputs w-100" [formGroup]="companyDetails">
                         <div class="input my-1">
@@ -82,8 +103,11 @@
                             </select>
                         </div>
                     </form>
-                </div>
-                <h6 class="my-3">NEW LISTED IPO DETAILS (WHEN IPO GET LISTED)</h6>
+                </div> 
+                
+            </div>
+            <!--  -->
+            <h6 class="my-3">NEW LISTED IPO DETAILS (WHEN IPO GET LISTED)</h6>
                 <div class="w-100">
                     <form class="inputs w-100" [formGroup]="newListedDetails">
                         <div class="input my-1">
@@ -101,7 +125,7 @@
                         <div class="input my-1">
                             <p class="my-1"><label for="listingDate">Listing Date</label></p>
                             <input class="p-1 w-75" type="text" placeholder="2024-05-30">
-                            </div>
+                        </div>
                         <div class="input my-1">
                             <p class="my-1"><label for="cmp">CMP</label></p>
                             <input class="p-1 w-75" type="text" placeholder="₹410" formControlName="cmp">
@@ -118,7 +142,6 @@
                         </div>
                     </form>
                 </div>
-            </div>
         </div>
     </div>
 </div>

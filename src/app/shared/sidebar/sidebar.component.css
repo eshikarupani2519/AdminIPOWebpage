@@ -42,3 +42,33 @@ li{
     padding: 0.5rem;
     cursor: pointer;
 }
+@media (max-width:650px) {
+    a i{
+        margin-right: 0.2rem;
+        
+    }
+}
+@media (max-width:600px) {
+    .sidebar{
+        font-size: 0.8rem;
+    }
+    .initials{
+        display: none;
+    }
+    .bluestock-cname{
+        height: 50px;
+    }
+}
+@media (max-width:524px) {
+  .sidebar{
+    min-width:30%;
+  }
+  .menu,.others{
+    width: 100%;
+  }
+  .bluestock-cname{
+    padding: 0%;
+        word-break: break-all;
+        display: inline;
+    }
+}

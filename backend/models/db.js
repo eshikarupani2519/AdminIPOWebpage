@@ -12,6 +12,5 @@ const pool = new Pool({
   // port: process.env.DB_PORT,
 });
 
-module.exports = {
-  query: (text, params) => pool.query(text, params),pool
-};
+// Correctly export the pool object directly
+module.exports = pool;

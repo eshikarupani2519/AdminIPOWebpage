@@ -21,12 +21,24 @@ export class UpcomingIpoScreenComponent implements OnInit { // Implemented OnIni
   totalPagesArray: number[] = [];
   paginatedIPOs: any = [];
 
-  isLoading: boolean = false; // <-- ADDED: Property to control loader visibility
+  isLoading: boolean = false; //  Property to control loader visibility
 
   ngOnInit() {
-    this.loadIPOs(); // Call a new method to load IPOs
+    this.itemsPerPage=window.innerWidth < 1000 ? 4 : 6;
+    this.loadIPOs(); 
   }
-
+updateIPOsList(newIpos: any[]) {
+  this.ipos = newIpos;
+  this.currentPage = 1; 
+  this.totalPages = Math.ceil(this.ipos.length / this.itemsPerPage);
+  this.updatePaginatedIPOs(); 
+  console.log("Parent component updated IPO list:", this.ipos);
+}
+updatePaginatedIPOs() {
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  const endIndex = startIndex + this.itemsPerPage;
+  this.paginatedIPOs = this.ipos.slice(startIndex, endIndex);
+}
   // ADDED: Method to load IPOs and handle pagination update
   loadIPOs() {
     this.isLoading = true; // Show loader when fetching IPOs

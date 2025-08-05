@@ -6,41 +6,51 @@ const authorize = require("../middleware/role.middleware");
 const upload = require("../middleware/upload.middleware");
 
 
-
-
+router.get("/search", ipoController.searchIPOs);
+router.get("/company/check", ipoController.checkCompanyExists);
 router.post(
   "/",
   upload.fields([
+    { name: 'logo', maxCount: 1 }, // NEW: Add the logo field
     { name: 'rhp', maxCount: 1 },
     { name: 'drhp', maxCount: 1 }
   ]),
   ipoController.registerIPO
 );
-
 // Get all IPOs
 router.get("/", ipoController.getAllIPOs);
 router.get("/:id", ipoController.getIPOById);
 
 // Search IPOs
-router.get("/search", ipoController.searchIPOs);
+
 
 // Get newly listed IPOs
 router.get("/listed", ipoController.getNewListedIPOs);
 
 // Update IPO
 // router.put("/:id", authenticate, authorize("admin"), ipoController.updateIPO);
+// router.put(
+//   '/:id',
+//   authenticate,
+//   authorize('admin'),
+//   upload.fields([
+//     { name: 'rhp', maxCount: 1 },
+//     { name: 'drhp', maxCount: 1 }
+//   ]),
+//   ipoController.updateIPO
+// );
+
 router.put(
   '/:id',
   authenticate,
   authorize('admin'),
   upload.fields([
+    { name: 'logo', maxCount: 1 }, // ADD THIS LINE
     { name: 'rhp', maxCount: 1 },
     { name: 'drhp', maxCount: 1 }
   ]),
   ipoController.updateIPO
 );
-
-
 // Delete IPO
 router.delete("/:id", authenticate, authorize("admin"), ipoController.deleteIPO);
 

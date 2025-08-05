@@ -17,8 +17,8 @@ app.use("/api/ipos", ipoRoutes);
 app.use("/api/admin", adminRoutes);
 const PORT = process.env.PORT || 5000;
 
-app.use('/uploads', express.static('uploads'));
-
+// app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
