@@ -89,7 +89,7 @@ navigateToPage(page:string){
   this.router.navigate([page]);
 }
 ngOnInit() {
-  // Subscribe to query parameters to check if we're in edit mode.
+  //  check if we're in edit mode.
   this.route.queryParams.subscribe(params => {
     const id = params['id'];
 
@@ -97,8 +97,8 @@ ngOnInit() {
       // We are in EDIT mode
       this.editingId = +id;
 
-      // CRITICAL FIX: Since we're editing an existing IPO, the company already exists.
-      // This will prevent the "new company requires a logo" alert.
+      //  Since we're editing an existing IPO, the company already exists.
+     
       this.companyExists = true;
 
       this.ipoService.getIPO(this.editingId).subscribe((ipo: any) => {
@@ -116,11 +116,9 @@ ngOnInit() {
           status: ipo.status,
         });
 
-        // CRITICAL FIX: Correctly set the logo preview URL.
-        // It will either be the external URL or the path to the uploaded file.
         this.logoPreview = this.getLogoPath(ipo.logo);
         
-        // Set existing RHP/DRHP filenames
+ 
         this.existingRhpFilename = ipo.rhp;
         this.existingDrhpFilename = ipo.drhp;
 
@@ -160,7 +158,7 @@ deleteLogo(){
   this.logoPreview=  'assets/nse-india-logo.png';
 }
 
-  // Method to check if the company exists
+  // Method to check if the company exists already in db
   checkCompanyExistence() {
     const companyName = this.companyDetails.get('companyName')?.value;
     if (companyName) {
@@ -199,8 +197,6 @@ deleteLogo(){
       return;
     }
   
-    // ... other form validations
-  
     const formData = new FormData();
   
     // Append company details
@@ -229,6 +225,8 @@ deleteLogo(){
       ? this.ipoService.updateIPO(this.editingId.toString(), formData)
       : this.ipoService.createIPO(formData);
   
+
+      // handles the after processing part
     apiCall.pipe(
       finalize(() => {
         this.isLoading = false;
