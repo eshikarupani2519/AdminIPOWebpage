@@ -40,11 +40,8 @@ exports.getNewListedIPOs = async (req, res) => {
   }
 };
 
-// =======================================================
-// RECTIFIED registerIPO function
-// =======================================================
 exports.registerIPO = async (req, res) => {
-  const client = await db.connect() // Get a client connection for the transaction
+  const client = await db.connect() 
   
   try {
     console.log("Starting IPO registration...");

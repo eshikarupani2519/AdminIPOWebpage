@@ -34,15 +34,9 @@ router.get("/stats", authenticate, authorize("admin"), async (req, res) => {
     // Queries for the IPO Dashboard India section
     const totalIposResult = await db.query("SELECT COUNT(*) FROM ipos");
 
-    // YOU MUST EDIT THESE NEXT TWO QUERIES
-    // Find the correct column in your 'ipos' table for gain/loss
-    // Example 1: If you have a 'gain_loss_percentage' column:
-    // const iposInGainResult = await db.query("SELECT COUNT(*) FROM ipos WHERE gain_loss_percentage > 0");
-    // const iposInLossResult = await db.query("SELECT COUNT(*) FROM ipos WHERE gain_loss_percentage < 0");
-
     // Example 2: If you have 'listing_price' and 'issue_price' columns:
-    const iposInGainResult = await db.query("SELECT COUNT(*) FROM ipos WHERE listing_price > ipo_price");
-    const iposInLossResult = await db.query("SELECT COUNT(*) FROM ipos WHERE listing_price < ipo_price");
+    const iposInGainResult = await db.query("SELECT COUNT(*) FROM ipos WHERE cmp > ipo_price");
+    const iposInLossResult = await db.query("SELECT COUNT(*) FROM ipos WHERE cmp < ipo_price");
 
     // Queries for the Main Board IPO Doughnut Chart
     // These queries might also need to be adjusted if your 'status' column has different values
